@@ -27,6 +27,7 @@ CSampleAddOnInterface::CSampleAddOnInterface()
 	initializeMenus();
 	m_nRefCount = 0;
 	m_nGlobalDrawCounter = 0;
+	m_ptinfo = NULL;
 
 }
 
@@ -66,8 +67,11 @@ HRESULT _stdcall CSampleAddOnInterface::SubMenuItems (/*[in]*/ long menuID,
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState())
 
+	// Initialize the out-parameter so we never marshal an uninitialized SAFEARRAY**
+	*pSubMenuIDs = NULL;
+
 	// Our addon has a root menu that has a sub-menu containing just two commands
-	if (nROOT_MENU_ID == menuID)	
+	if (nROOT_MENU_ID == menuID)
 	{
 		SafeArrayCopy (m_RootSubMenuIDs, pSubMenuIDs);
 	}
@@ -229,7 +233,7 @@ void CSampleAddOnInterface::initializeMenus()
 
 	getSafeArrayFromArray<int> (pRootMenus, nMAIN_MENUS_COUNT, VT_INT, &m_RootSubMenuIDs);
 
-	delete pRootMenus;
+	delete[] pRootMenus;
 }
 
 
@@ -288,7 +292,10 @@ long _stdcall  CSampleAddOnInterface::GetIDsOfNames(
 	LCID lcid,
 	DISPID FAR* rgDispId)
 {
-	return DispGetIDsOfNames(m_ptinfo, rgszNames, cNames, rgDispId);
+	// Original logic:
+	// if (!m_ptinfo) return E_FAIL; // m_ptinfo must be valid
+	// return DispGetIDsOfNames(m_ptinfo, rgszNames, cNames, rgDispId);
+	return E_NOTIMPL; // Placeholder: m_ptinfo setup is required.
 }
 
 long _stdcall  CSampleAddOnInterface::GetTypeInfo(
@@ -301,17 +308,19 @@ long _stdcall  CSampleAddOnInterface::GetTypeInfo(
 	if (iTInfo != 0)
 		return ResultFromScode(DISP_E_BADINDEX);
 
-	m_ptinfo->AddRef();
-	*ppTInfo = m_ptinfo;
-
-	return NOERROR;
+	// Original logic:
+	// if (!m_ptinfo) return E_FAIL; // m_ptinfo must be valid
+	// m_ptinfo->AddRef();
+	// *ppTInfo = m_ptinfo;
+	// return NOERROR;
+	return E_NOTIMPL; // Placeholder: m_ptinfo setup is required.
 }
 
 
 long _stdcall CSampleAddOnInterface::GetTypeInfoCount(UINT FAR* pctinfo)
 {
-	*pctinfo = 1;
-	return NOERROR;
+	*pctinfo = 0; // No type info available (m_ptinfo is not set up)
+	return S_OK;
 }
 
 
@@ -325,10 +334,10 @@ long _stdcall  CSampleAddOnInterface::Invoke(
 	EXCEPINFO FAR* pExcepInfo,
 	UINT FAR* puArgErr)
 {
-	return DispInvoke(
-		this, m_ptinfo,
-		dispidMember, wFlags, pDispParams,
-		pVarResult, pExcepInfo, puArgErr);
+	// Original logic:
+	// if (!m_ptinfo) return E_FAIL; // m_ptinfo must be valid
+	// return DispInvoke(this, m_ptinfo, dispidMember, wFlags, pDispParams, pVarResult, pExcepInfo, puArgErr);
+	return E_NOTIMPL; // Placeholder: m_ptinfo setup is required.
 }
 
 

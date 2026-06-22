@@ -51,13 +51,31 @@ bool DrawTriangle(IADAddOnCanvasDisplay* pCanvasDisplay, LPWSTR pImageFilePath)
 	if (getSafeArrayFromArray<float>(vertices, (long)9, VT_R4, &saVertices) != S_OK)
 		return false;
 	if (getSafeArrayFromArray<float>(normals, (long)9, VT_R4, &saNormals) != S_OK)
+	{
+		SafeArrayDestroy(saVertices);
 		return false;
+	}
 	if (getSafeArrayFromArray<int>(indices, (long)4, VT_I4, &saIndices) != S_OK)
+	{
+		SafeArrayDestroy(saVertices);
+		SafeArrayDestroy(saNormals);
 		return false;
+	}
 	if (getSafeArrayFromArray<float>(color, (long)3, VT_R4, &saRGB) != S_OK)
+	{
+		SafeArrayDestroy(saVertices);
+		SafeArrayDestroy(saNormals);
+		SafeArrayDestroy(saIndices);
 		return false;
+	}
 	if (getSafeArrayFromArray<double>(transform, (long)12, VT_R8, &saTransform) != S_OK)
+	{
+		SafeArrayDestroy(saVertices);
+		SafeArrayDestroy(saNormals);
+		SafeArrayDestroy(saIndices);
+		SafeArrayDestroy(saRGB);
 		return false;
+	}
 
 	LONG64 result;
 	LONG64 mySegment;
@@ -68,7 +86,15 @@ bool DrawTriangle(IADAddOnCanvasDisplay* pCanvasDisplay, LPWSTR pImageFilePath)
 
 	// START TEXTURE BLOCK
 	if (getSafeArrayFromArray<float>(vertexUVs, (long)6, VT_R4, &saVertexUVparams) != S_OK)
-		return false; // Memory for sa* allocated above will leak if returning early. Consider cleanup.
+	{
+		SafeArrayDestroy(saVertices);
+		SafeArrayDestroy(saNormals);
+		SafeArrayDestroy(saIndices);
+		SafeArrayDestroy(saRGB);
+		SafeArrayDestroy(saTransform);
+		SysFreeString(mySegmentName);
+		return false;
+	}
 	BSTR textureName = SysAllocString(L"Wood");
 	BSTR imagePath = SysAllocString(pImageFilePath);
 	pCanvasDisplay->DefineTexture(mySegment, textureName, ImageFormat_JPEG, imagePath);
@@ -122,7 +148,6 @@ CDrawTriangleCommand::CDrawTriangleCommand(VARIANT_BOOL bOverrideRender, VARIANT
 	m_pCmdSite = NULL;
 	m_bClearViewPort = bClearViewPort;
 	m_bOverrideRender = bOverrideRender;
-	m_nGlobalDrawCounter = 0;
 	m_bLegacyRenderer = VARIANT_TRUE; // NOTE: Consider setting to VARIANT_FALSE if only Hoops path is used.
 	m_bIsOutOfDate = true;
 	// m_ptinfo = NULL; // IMPORTANT: m_ptinfo (ITypeInfo*) must be declared in class and initialized.

@@ -23,7 +23,7 @@ HRESULT getSafeArrayFromArray (/*IN*/ T* pBuffer,
 	// check the input parameters
 	if ((NULL == pBuffer) || (size <= 0))
 	{
-		return ERROR_INVALID_PARAMETER;
+		return E_INVALIDARG;
 	}
 
 	// Wrap the buffer of int's in a SAFEARRAY
@@ -32,7 +32,7 @@ HRESULT getSafeArrayFromArray (/*IN*/ T* pBuffer,
 	if ((*ppNums = SafeArrayCreateVector (VT_Size, 1, size)) == NULL)
 	{
 		_ASSERT (FALSE);
-		return ERROR_NOT_ENOUGH_MEMORY;
+		return E_OUTOFMEMORY;
 	}
 
 	// Gain access to memory allocated for the SAFEARRAY.  This increments the lock count.

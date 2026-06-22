@@ -46,9 +46,9 @@
 #include <afxcoll.h>
 
 // Edit the folder path to the type library files below based on where Alibre Design is installed on your computer
-#import "C:\Program Files\Alibre Design 28.0.4.28141\Program\AlibreX_64.tlb"
+#import "C:\Program Files\Alibre Design 29.0.0.29060\Program\AlibreX_64.tlb" rename("SendMessage", "AlibreSendMessage")
 using namespace AlibreX;
-#import "C:\Program Files\Alibre Design 28.0.4.28141\Program\AlibreAddOn_64.tlb" raw_interfaces_only
+#import "C:\Program Files\Alibre Design 29.0.0.29060\Program\AlibreAddOn_64.tlb" raw_interfaces_only exclude("IStream")
 using namespace AlibreAddOn;
 
 

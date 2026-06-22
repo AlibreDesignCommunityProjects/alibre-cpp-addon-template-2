@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ===========================================
 # Visual Studio C++ Project Gitignore
 # ===========================================
@@ -100,9 +99,3 @@ _ReSharper*/
 *.DotSettings.user
 *.DotSettings
 Debug/
-=======
-Debug/
-.vs/
-*.pch
-*.ipch
->>>>>>> d159e0d061b533bf1787e39e45dc86551d93c3eb
