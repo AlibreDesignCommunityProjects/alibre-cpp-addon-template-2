@@ -1,5 +1,3 @@
-// DrawTriangleCommand.h: interface for the CDrawTriangleCommand class.
-//
 //////////////////////////////////////////////////////////////////////
 
 #if !defined(AFX_DRAWTRIANGLECOMMAND_H__4471FEA9_8B69_409C_B3DE_D4AF6B312DF3__INCLUDED_)
@@ -7,21 +5,19 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
-class CDrawTriangleCommand : public IAlibreAddOnCommand 
+class CDrawTriangleCommand : public IAlibreAddOnCommand
 {
 public:
 	CDrawTriangleCommand();
 	CDrawTriangleCommand(VARIANT_BOOL bOverrideRender, VARIANT_BOOL bClearViewPort);
 	virtual ~CDrawTriangleCommand();
 
-	// IUnknown
 	HRESULT _stdcall QueryInterface (REFIID riid, void **ppObj) ;
 	ULONG _stdcall AddRef();
 	ULONG _stdcall Release();
 
-	// IDispatch
 	long _stdcall GetTypeInfoCount(UINT FAR* pctinfo);
 	long _stdcall GetTypeInfo(
 						UINT iTInfo,
@@ -45,50 +41,49 @@ public:
 						EXCEPINFO FAR* pExcepInfo,
 						UINT FAR* puArgErr);
 
-	// Methods from IAlibreAddOnCommand
-	HRESULT _stdcall putref_CommandSite(/* [in] */ IADAddOnCommandSite *pSite);
-    
-	HRESULT _stdcall get_CommandSite(/* [retval][out] */ IADAddOnCommandSite **pSite);
+	HRESULT _stdcall putref_CommandSite( IADAddOnCommandSite *pSite);
 
-    HRESULT _stdcall AddTab(/* [retval][out] */ VARIANT_BOOL *pAddTab);
-        
-    HRESULT _stdcall OnShowUI(/* [in] */ __int64 hWnd);
-        
-    HRESULT _stdcall OnRender(/* [in] */ long hDC, 
-							  /* [in] */ long clipRectX,/* [in] */ long clipRectY,
-							  /* [in] */ long clipWidth,/* [in] */ long clipHeight);
+	HRESULT _stdcall get_CommandSite( IADAddOnCommandSite **pSite);
+
+    HRESULT _stdcall AddTab( VARIANT_BOOL *pAddTab);
+
+    HRESULT _stdcall OnShowUI( __int64 hWnd);
+
+    HRESULT _stdcall OnRender( long hDC,
+							   long clipRectX, long clipRectY,
+							   long clipWidth, long clipHeight);
 
 	HRESULT _stdcall On3DRender (void);
-        
-    HRESULT _stdcall OnClick (/* [in] */ long screenX, /* [in] */ long screenY, /* [in] */ enum ADDONMouseButtons buttons, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
-        
-    HRESULT _stdcall OnDoubleClick (/* [in] */ long screenX, /* [in] */ long screenY, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
-        
-	HRESULT _stdcall OnMouseDown (/* [in] */ long screenX, /* [in] */ long screenY, /* [in] */ enum ADDONMouseButtons buttons, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
-        
-    HRESULT _stdcall OnMouseMove (/* [in] */ long screenX, /* [in] */ long screenY, /* [in] */ enum ADDONMouseButtons buttons, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
-        
-    HRESULT _stdcall OnMouseUp (/* [in] */ long screenX, /* [in] */ long screenY, /* [in] */ enum ADDONMouseButtons buttons, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
-        
+
+    HRESULT _stdcall OnClick ( long screenX,  long screenY,  enum ADDONMouseButtons buttons,  VARIANT_BOOL *pIsHandled);
+
+    HRESULT _stdcall OnDoubleClick ( long screenX,  long screenY,  VARIANT_BOOL *pIsHandled);
+
+	HRESULT _stdcall OnMouseDown ( long screenX,  long screenY,  enum ADDONMouseButtons buttons,  VARIANT_BOOL *pIsHandled);
+
+    HRESULT _stdcall OnMouseMove ( long screenX,  long screenY,  enum ADDONMouseButtons buttons,  VARIANT_BOOL *pIsHandled);
+
+    HRESULT _stdcall OnMouseUp ( long screenX,  long screenY,  enum ADDONMouseButtons buttons,  VARIANT_BOOL *pIsHandled);
+
     HRESULT _stdcall OnSelectionChange (void);
-        
+
     HRESULT _stdcall OnTerminate (void);
 
 	HRESULT _stdcall OnComplete( void);
 
-	HRESULT _stdcall OnKeyDown (/* [in] */ long keyCode, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
+	HRESULT _stdcall OnKeyDown ( long keyCode,  VARIANT_BOOL *pIsHandled);
 
-	HRESULT _stdcall OnKeyUp (/* [in] */ long keyCode, /* [retval] [out] */ VARIANT_BOOL *pIsHandled);
+	HRESULT _stdcall OnKeyUp ( long keyCode,  VARIANT_BOOL *pIsHandled);
 
-	HRESULT _stdcall IsTwoWayToggle( /* [retval][out] */ VARIANT_BOOL *pIsTwoWayToggle);
+	HRESULT _stdcall IsTwoWayToggle(  VARIANT_BOOL *pIsTwoWayToggle);
 
-	HRESULT _stdcall OnEscape ( /* [retval][out] */ VARIANT_BOOL *pIsHandled);
+	HRESULT _stdcall OnEscape (  VARIANT_BOOL *pIsHandled);
 
-	HRESULT _stdcall OnMouseWheel (/* [in] */ double delta, /* [retval][out] */ VARIANT_BOOL *pIsHandled);
+	HRESULT _stdcall OnMouseWheel ( double delta,  VARIANT_BOOL *pIsHandled);
 
-	HRESULT _stdcall get_TabName(/*[out], [retval]*/ BSTR* pTabName);
-	
-	HRESULT _stdcall get_Extents (/*[out,retval]*/ SAFEARRAY **pExtents);
+	HRESULT _stdcall get_TabName( BSTR* pTabName);
+
+	HRESULT _stdcall get_Extents ( SAFEARRAY **pExtents);
 
 private:
 	long					m_nRefCount;
@@ -102,7 +97,6 @@ private:
 
 public:
 	void					TerminateCommand ();
-
 };
 
 struct ColorVertex
@@ -120,4 +114,4 @@ struct ColorVertex
 	static const DWORD FVF;
 };
 
-#endif // !defined(AFX_DRAWTRIANGLECOMMAND_H__4471FEA9_8B69_409C_B3DE_D4AF6B312DF3__INCLUDED_)
+#endif
