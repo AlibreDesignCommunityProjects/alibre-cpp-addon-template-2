@@ -19,7 +19,6 @@
   - Where things live
     - `source/` holds the C++ project, the add-on descriptor, and the sample assets.
     - `documentation/` holds reference notes.
-    - `reviews/` holds dated code reviews.
   - Good to know
     - Give your add-on a fresh identifier before you ship it, so it does not clash with the sample.
   - Use it under the MIT License.
