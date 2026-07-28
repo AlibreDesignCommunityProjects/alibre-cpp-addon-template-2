@@ -99,3 +99,9 @@ _ReSharper*/
 *.DotSettings.user
 *.DotSettings
 Debug/
+
+# Developer notes extracted from source comments; not committed.
+documentation/developer/
+
+# Code reviews are private developer data; not committed.
+reviews/
